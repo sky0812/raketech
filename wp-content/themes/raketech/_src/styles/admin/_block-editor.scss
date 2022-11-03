@@ -1,0 +1,33 @@
+@import '~foundation-sites/scss/foundation';
+@import '../settings/foundation';
+$enable-cite-block: false;
+$enable-code-inline: false;
+.editor-styles-wrapper > div {
+  background: $body-background;
+  font-family: $body-font-family;
+  font-weight: $global-weight-normal;
+  line-height: $global-lineheight;
+  color: $body-font-color;
+  @include foundation-typography-base;
+  @include foundation-table($nest: true);
+}
+
+@import '../settings/block-editor';
+@import '../frontend/block-editor';
+@include block-editor-alignment($is_editor: true);
+@include block-editor-button;
+//@include block-editor-columns;
+//@include block-editor-cover;
+//@include block-editor-gallery;
+//@include block-editor-latest-posts;
+//@include block-editor-media-text;
+@include block-editor-pullquote;
+@include block-editor-quote;
+//@include block-editor-code;
+@include block-editor-block-search;
+@include block-editor-tag-cloud;
+@include block-editor-table;
+@include block-editor-group;
+@include block-editor-backgrounds;
+@include block-editor-colors;
+@include block-editor-font-sizes;

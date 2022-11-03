@@ -1,0 +1,39 @@
+{
+  "name": "goldencomm-wordpress-starter-theme",
+  "version": "2.0.5",
+  "description": "GoldenComm's WordPress Starter Theme",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@goldencomm/toolkit": "latest",
+    "foundation-sites": "^6.6.3",
+    "jquery": "^3.6.0",
+    "jquery-mask-plugin": "^1.14.16",
+    "slick-carousel": "^1.8.1"
+  },
+  "devDependencies": {
+    "@goldencomm/build-scripts": "latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gc start",
+    "setup": "gc setup",
+    "static": "gc static",
+    "build": "gc build",
+    "admin": "gc admin",
+    "theme": "gc theme",
+    "admin-prod": "gc admin --production",
+    "production": "gc production"
+  },
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Safari versions",
+    "last 2 iOS versions",
+    "last 1 Android version",
+    "last 1 ChromeAndroid version"
+  ],
+  "license": "MIT",
+  "platform": "wordpress",
+  "sideEffects": false
+}

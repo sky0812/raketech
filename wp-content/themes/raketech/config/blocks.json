@@ -1,0 +1,100 @@
+{
+  "example": {
+    "title": "Example",
+    "description": "This is an example block",
+    "render": "examples",
+    "fields": {
+      "checkbox": {
+        "type": "checkbox",
+        "label": "Checkbox Label",
+        "value": "checkbox"
+      },
+      "checkboxes": {
+        "type": "checkboxes",
+        "label": "Checkboxes 1",
+        "options": {
+          "value-1": "Label 1",
+          "value-2": "Label 2"
+        },
+        "default": ["value-1"]
+      },
+      "checkboxes-2": {
+        "type": "checkboxes",
+        "label": "Checkboxes 2",
+        "options": [
+          "Label 1",
+          "Label 2"
+        ],
+        "default": ["Label 1"]
+      },
+      "image": {
+        "type": "image",
+        "label": "Image"
+      },
+      "file": {
+        "type": "media",
+        "label": "Media"
+      },
+      "multi_post": {
+        "type": "multi_post",
+        "label": "Multi-post"
+      },
+      "blog-post": {
+        "type": "post",
+        "label": "Post"
+      },
+      "radio": {
+        "type": "radio",
+        "label": "Radio",
+        "options": {
+          "value-1": "Label 1",
+          "value-2": "Label 2"
+        },
+        "default": "value-1"
+      },
+      "radio-2": {
+        "type": "radio",
+        "label": "Radio",
+        "options": [
+          "Label 1",
+          "Label 2"
+        ],
+        "default": "Label 1"
+      },
+      "range": {
+        "type": "range",
+        "label": "Range"
+      },
+      "select": {
+        "type": "select",
+        "label": "Select",
+        "options": {
+          "value-1": "Label 1",
+          "value-2": "Label 2"
+        }
+      },
+      "select_2": {
+        "type": "select",
+        "label": "Select",
+        "options": [
+          "Label 1",
+          "Label 2"
+        ],
+        "placeholder": "Please choose one"
+      },
+      "text": {
+        "type": "text",
+        "label": "Text",
+        "help": "This is a description"
+      },
+      "textarea": {
+        "type": "textarea",
+        "label": "Textarea"
+      },
+      "toggle": {
+        "type": "toggle",
+        "label": "Toggle"
+      }
+    }
+  }
+}

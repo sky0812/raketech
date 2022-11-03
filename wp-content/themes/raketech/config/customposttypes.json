@@ -1,0 +1,21 @@
+{
+  "gc-media" : {
+    "singular" :"Media Suite",
+    "plural": "Media Suites",
+    "exclude_from_search": true,
+    "show_in_rest": true,
+    "menu_icon": "dashicons-layout",
+    "has_archive": "media",
+    "rewrite": {
+      "slug": "media"
+    }
+  },
+  "page" : {
+    "labels" : {
+      "featured_image" : "Hero Banner",
+      "set_featured_image" : "Set hero banner",
+      "remove_featured_image" : "Remove hero banner",
+      "use_featured_image" : "Use as hero banner"
+    }
+  }
+}
