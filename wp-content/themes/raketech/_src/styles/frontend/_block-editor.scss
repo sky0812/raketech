@@ -1,0 +1,468 @@
+$content-width: 900px !default;
+$content-width-wide: 1200px !default;
+
+@mixin -gc-block-editor-float-align {
+  @include breakpoint($content-width) {
+    &.alignleft {
+      margin-left: calc(50% - #{$content-width / 2});
+    }
+    &.alignright {
+      margin-right: calc(50% - #{$content-width / 2});
+    }
+  }
+}
+
+@mixin -gc-block-editor-gutters($top: false, $right: false, $bottom: false, $left: false, $spacing: margin) {
+  $gutters: $grid-margin-gutters;
+  @if $spacing == padding {
+    $gutters: $grid-padding-gutters;
+  }
+  @each $breakpoint, $gutter in $gutters {
+    @include breakpoint($breakpoint) {
+      @if $top {
+        #{$spacing}-top: rem-calc($gutter / 2);
+      }
+      @if $right {
+        #{$spacing}-right: rem-calc($gutter / 2);
+      }
+      @if $bottom {
+        #{$spacing}-bottom: rem-calc($gutter / 2);
+      }
+      @if $left {
+        #{$spacing}-left: rem-calc($gutter / 2);
+      }
+    }
+  }
+}
+
+@mixin -gc-block-editor-inner-content {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $content-width-wide;
+  width: 100%;
+}
+
+@mixin block-editor {
+  @include block-editor-alignment;
+  @include block-editor-button;
+  @include block-editor-columns;
+  @include block-editor-cover;
+  @include block-editor-gallery;
+  @include block-editor-latest-posts;
+  @include block-editor-media-text;
+  @include block-editor-pullquote;
+  @include block-editor-quote;
+  @include block-editor-code;
+  @include block-editor-block-search;
+  @include block-editor-tag-cloud;
+  @include block-editor-table;
+  @include block-editor-group;
+  @include block-editor-backgrounds;
+  @include block-editor-colors;
+  @include block-editor-font-sizes;
+}
+
+// .rte is the container class for the_content() that applies the correct max-width values for wide and full alignments.
+@mixin block-editor-alignment($is_editor: false) {
+  @if ($is_editor) {
+    .wp-block {
+      max-width: $content-width;
+    }
+    .wp-block[data-align="wide"] {
+      max-width: $content-width-wide;
+    }
+    .wp-block[data-align="full"] {
+      max-width: none;
+    }
+    .block-list-appender {
+      max-width: $content-width;
+      margin: 0 auto;
+    }
+  }
+  @else {
+    .rte {
+      > *,
+      > .wp-block-gallery,
+      > .wp-block-image,
+      > .wp-block-pullquote,
+      > .wp-block-quote.is-style-large {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: $content-width;
+      }
+
+      > .alignwide {
+        max-width: $content-width-wide;
+      }
+
+      > .alignfull {
+        max-width: none;
+      }
+    }
+
+    // correct float alignment.
+    .wp-block-embed.alignleft,
+    .wp-block-embed.alignright,
+    .wp-block-gallery,
+    .wp-block-tag-cloud {
+      @include -gc-block-editor-float-align
+    }
+  }
+}
+
+// apply foundation button styling to the block-editor buttons.
+@mixin block-editor-button {
+  .wp-block-button {
+    // solid buttons
+    .wp-block-button__link {
+      @include button($style: none);
+      @include button-fill(solid);
+      @include button-fill-style(solid);
+
+      @each $name, $hex in $theme_palette {
+        &.has-#{$name}-background-color {
+          @include button-fill-style(solid, $hex, auto, auto);
+        }
+      }
+    }
+
+    // hollow buttons
+    &.is-style-outline .wp-block-button__link {
+      @include button-fill(hollow);
+      @include button-fill-style(hollow);
+
+      @each $name, $hex in $theme_palette {
+        &.has-#{$name}-background-color {
+          @include button-fill-style(hollow, $hex, auto, auto);
+        }
+      }
+    }
+  }
+}
+
+
+@mixin block-editor-columns {
+  // get columns block to match foundation breakpoints.
+  :root .wp-block-columns {
+    margin-bottom: 0;
+    @include breakpoint(small down) {
+      flex-wrap: wrap;
+    }
+    @include breakpoint(medium) {
+      flex-wrap: nowrap;
+    }
+  }
+
+  // get column block to match foundation breakpoints and use foundation gutters.
+  :root .wp-block-column {
+    @include breakpoint(small down) {
+      flex-basis: 100% !important;
+      &:nth-child(2n) {
+        margin-left: 0;
+      }
+    }
+    @each $breakpoint, $gutter in $grid-margin-gutters {
+      @if $breakpoint != small {
+        @include breakpoint($breakpoint) {
+          flex-basis: calc(50% - #{rem-calc($gutter / 2)});
+          &:nth-child(n+2) {
+            margin-left: rem-calc($gutter);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin block-editor-cover {
+  // give cover image more sensible defaults. correct float alignment.
+  :root .wp-block-cover-image,
+  :root .wp-block-cover {
+    @include -gc-block-editor-float-align;
+
+    .wp-block-cover__inner-container {
+      @include -gc-block-editor-inner-content;
+    }
+  }
+}
+
+// apply (half-sized) foundation gutters to gallery blocks.
+@mixin block-editor-gallery {
+  :root .blocks-gallery-grid,
+  :root .wp-block-gallery {
+    .blocks-gallery-image,
+    .blocks-gallery-item {
+      @each $breakpoint, $gutter in $grid-margin-gutters {
+        @include breakpoint($breakpoint) {
+          margin-right: rem-calc($gutter / 2);
+          margin-bottom: rem-calc($gutter / 2);
+          width: calc((100% - #{rem-calc($gutter / 2)}) / 2);
+        }
+      }
+    }
+  }
+  :root .wp-block-gallery {
+    &.alignleft {
+      margin-right: 20px;
+    }
+
+    &.alignright {
+      margin-left: 20px;
+    }
+  }
+}
+
+@mixin block-editor-latest-posts {
+  // use foundation gutters.
+  .wp-block-latest-posts {
+    @include -gc-block-editor-float-align;
+
+    &.is-grid li {
+      @include -gc-block-editor-gutters($right: true, $bottom: true);
+    }
+  }
+}
+
+@mixin block-editor-media-text {
+  :root .wp-block-media-text {
+    // more sensible default spacing for content. use foundation gutters.
+    .wp-block-media-text__content {
+      @include -gc-block-editor-gutters($right: true, $left: true, $spacing: padding);
+      max-width: $content-width-wide / 2;
+    }
+
+    &.has-media-on-the-right .wp-block-media-text__content {
+      margin-left: auto;
+    }
+
+    // use foundation breakpoint for stacking.
+    @include breakpoint(small down) {
+      &.is-stacked-on-mobile {
+        -ms-grid-columns: 100% !important;
+        grid-template-columns: 100% !important;
+
+        &.has-media-on-the-right .wp-block-media-text__content,
+        .wp-block-media-text__media {
+          -ms-grid-column: 1;
+          grid-column: 1;
+          -ms-grid-row: 1;
+          grid-row: 1;
+        }
+
+        &.has-media-on-the-right .wp-block-media-text__media,
+        .wp-block-media-text__content {
+          -ms-grid-column: 1;
+          grid-column: 1;
+          -ms-grid-row: 2;
+          grid-row: 2;
+        }
+      }
+    }
+  }
+}
+
+@mixin block-editor-pullquote {
+  // get pullquote block to better match the default admin block styling.
+  :root .wp-block-pullquote {
+    border: $blockquote-border;
+    border-style: none;
+
+    &.alignfull blockquote {
+      @include -gc-block-editor-inner-content;
+    }
+
+    &.is-style-solid-color {
+      blockquote {
+        border: none;
+      }
+    }
+
+    blockquote {
+      border-left: none;
+      border-top: $blockquote-border;
+      border-bottom: $blockquote-border;
+      border-color: inherit;
+      margin-bottom: 0;
+      padding: 3em 1em;
+
+      p {
+        color: inherit;
+      }
+    }
+  }
+}
+
+// get quote block to better match the default admin block-editor styling.
+@mixin block-editor-quote {
+  .wp-block-quote,
+  .wp-block-quote {
+    &.has-text-align-center {
+      border-left: none;
+    }
+
+    &.has-text-align-right {
+      border-left: none;
+      border-right: $blockquote-border;
+    }
+
+    &.is-large,
+    &.is-style-large {
+      border: none;
+    }
+  }
+}
+
+@mixin block-editor-code {
+  // bug fix: make code element fill the pre element.
+  .wp-block-code code {
+    display: block;
+  }
+}
+
+@mixin block-editor-block-search {
+  // make search look like a foundation input group.
+  :root .wp-block-search {
+    margin-bottom: $global-margin;
+
+    .wp-block-search__input {
+      border: $input-border;
+      border-radius: $input-radius;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      margin: 0;
+      padding: $input-padding;
+      height: auto;
+      width: auto;
+    }
+
+    .wp-block-search__button {
+      @include button($style: none);
+      @include button-fill(solid);
+      @include button-fill-style(solid);
+      border-radius: $input-radius;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      margin-bottom: 0;
+      margin-left: 0;
+    }
+  }
+}
+
+@mixin block-editor-tag-cloud {
+  // set max-width on floated tag clouds
+  :root .wp-block-tag-cloud {
+    &.alignright,
+    &.alignleft {
+      max-width: 305px;
+    }
+  }
+}
+
+@mixin block-editor-table {
+  :root .wp-block-table {
+    // remove borders in block-editor
+    td,
+    th {
+      border-style: none;
+    }
+
+    // remove foundation coloring
+    tbody,
+    thead {
+      background-color: transparent;
+    }
+
+    // remove default foundation striped styling
+    &.is-style-regular {
+      tbody {
+        @include -zf-table-unstripe();
+
+        tr {
+          background-color: transparent;
+        }
+      }
+    }
+
+    &.is-style-stripes {
+      @if ($table-stripe == odd) {
+        // use the foundation color.
+        tbody tr:nth-child(odd) {
+          background-color: $table-striped-background;
+        }
+      } @else {
+        // remove block default styling and re-apply it to the even rows.
+        tbody tr:nth-child(odd) {
+          background-color: transparent;
+          @include -zf-table-stripe;
+        }
+        &.has-subtle-light-gray-background-color tbody tr:nth-child(even) {
+          background-color: #f3f4f5;
+        }
+        &.has-subtle-pale-green-background-color tbody tr:nth-child(even) {
+          background-color: #e9fbe5;
+        }
+        &.has-subtle-pale-blue-background-color tbody tr:nth-child(even) {
+          background-color: #e7f5fe;
+        }
+        &.has-subtle-pale-pink-background-color tbody tr:nth-child(event) {
+          background-color: #fcf0ef;
+        }
+      }
+    }
+  }
+}
+
+@mixin block-editor-group {
+  // add padding to block groups with background-colors, and set max-width on the inner content.
+  .wp-block-group {
+    &.has-background {
+      padding: 6em 1em;
+    }
+
+    &.alignfull .wp-block-group__inner-container {
+      @include -gc-block-editor-inner-content;
+    }
+  }
+}
+
+@mixin block-editor-backgrounds {
+  // use foundation colors in blocks.
+  @each $name, $hex in $theme_palette {
+    :root .has-#{$name}-background-color {
+      background-color: $hex;
+    }
+  }
+}
+@mixin block-editor-colors {
+  // use foundation colors in blocks.
+  @each $name, $hex in $theme_palette {
+    :root .has-#{$name}-color {
+      color: $hex;
+    }
+  }
+}
+
+@mixin block-editor-font-sizes {
+  // use foundation font sizes in blocks.
+  @each $size, $props in $theme_font_sizes {
+    $selector: $size;
+    @if $selector == h1 {
+      $selector: h-1;
+    } @else if $selector == h2 {
+      $selector: h-2;
+    } @else if $selector == h3 {
+      $selector: h-3;
+    } @else if $selector == h4 {
+      $selector: h-4;
+    } @else if $selector == h5 {
+      $selector: h-5;
+    } @else if $selector == h6 {
+      $selector: h-6;
+    }
+    .has-#{$selector}-font-size {
+      @each $prop, $value in $props {
+        #{$prop}: rem-calc($value);
+      }
+    }
+  }
+}

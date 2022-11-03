@@ -1,0 +1,31 @@
+/*
+  Theme Name: GoldenComm WordPress Starter Theme
+  Theme URI: https://wordpress.gscadmin.com
+  Description: This is a WordPress theme developed by GoldenComm
+  Version: 2.1.0
+  Template: gc-parent
+  Author: GoldenComm
+  Author URI: https://www.goldencomm.com
+  License: MIT
+  Textdomain: gc-starter
+
+
+  NOTE TO DEVELOPERS:
+
+  Unfortunately WordPress will require a style.css file
+  located in the theme's root folder for stuff to work.
+  However, GoldenComm does not use vanilla CSS. We use Sass.
+
+  Sass is a superset of CSS that adds in amazing features
+  such as variables, nested selectors and loops. It's also
+  the easiest way to customize Foundation.
+
+  All Sass files are located in the ./_src/styles folder.
+
+  Please read the README.md file before getting started.
+  More info on how to use Sass with Foundation can be found here:
+  http://foundation.zurb.com/docs/sass.html
+
+  Plain CSS added to this file will not propagate unless this file is
+  enqueued using the appropriate WordPress hooks.Thanks! Happy coding!
+*/

@@ -1,0 +1,36 @@
+{
+  "header" : {
+    "title" : "Header",
+    "fields" : {
+      "logo" : {
+        "label" : "Logo",
+        "type" : "image",
+        "default" : "{{image logo.png}}"
+      },
+      "test" : {
+        "label" : "Testing",
+        "type" : "text",
+        "default" : "{{short_lorem}}"
+      }
+    }
+  },
+  "social": {
+    "title" : "Social Networks",
+    "fields" : "{{gc_fieldset_social}}"
+  },
+  "footer" : {
+    "title" : "Footer",
+    "fields" : {
+      "color" : {
+        "label" : "Text Color",
+        "type" : "color",
+        "default" : "#000000"
+      },
+      "logo" : {
+        "label" : "Logo",
+        "type" : "image",
+        "default" : "{{image logo.png}}"
+      }
+    }
+  }
+}
